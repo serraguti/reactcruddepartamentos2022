@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import Global from '../Global';
 
 export default class MenuDepartamentos extends Component {
+  state = {
+    departamentos: [],
+    status: false
+  }
+
+  loadDepartamentos = () => {
+    var request = "/api/departamentos";
+    var url = Global.urlDepartamentos + request;
+    axios.get(url).then(response => {
+      this.setState({
+        departamentos: response.data,
+        status: true
+      });
+    });
+  }
+
+  componentDidMount = () => {
+    this.loadDepartamentos();
+  }
+
   render() {
     return (
         <nav className="navbar navbar-expand-lg bg-light">
@@ -21,13 +43,20 @@ export default class MenuDepartamentos extends Component {
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Acciones
+                  Departamentos
                 </a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Action</a></li>
-                  <li><a className="dropdown-item" href="#">Another action</a></li>
-                  <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="#">Something else here</a></li>
+                   {
+                      this.state.status == true &&
+                      this.state.departamentos.map((dept, index) => {
+                        return (<li key={dept.numero}>
+                          <NavLink to={"/empleados/" + dept.numero}
+                          className="dropdown-item">
+                            {dept.nombre}
+                          </NavLink>
+                        </li>);
+                      })
+                   }
                 </ul>
               </li>
             </ul>
