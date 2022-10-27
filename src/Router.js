@@ -5,6 +5,8 @@ import Departamentos from './components/Departamentos';
 import CreateDepartamento from './components/CreateDepartamento';
 import MenuDepartamentos from './components/MenuDepartamentos';
 import DetallesDepartamento from './components/DetallesDepartamento';
+import DeleteDepartamento from './components/DeleteDepartamento';
+import UpdateDepartamento from './components/UpdateDepartamento';
 
 export default class Router extends Component {
   render() {
@@ -15,6 +17,17 @@ export default class Router extends Component {
           nombre={nom} localidad={loc}/>
       );
     }
+
+    function DeleteDepartamentoElement() {
+      var { id } = useParams();
+      return (<DeleteDepartamento id={id}/>);
+    }
+
+    function UpdateDepartamentoElement() {
+      var { iddepartamento } = useParams();
+      return (<UpdateDepartamento id={iddepartamento}/>);
+    }
+
     return (
       <BrowserRouter>
         <MenuDepartamentos/>
@@ -23,6 +36,9 @@ export default class Router extends Component {
             <Route path="/create" element={<CreateDepartamento/>}/>
             <Route path="/details/:num/:nom/:loc"
               element={<DetallesDepartamentoElement/>}/>
+            <Route path='/delete/:id' element={<DeleteDepartamentoElement/>}/>
+            <Route path="/update/:iddepartamento"
+              element={<UpdateDepartamentoElement/>}/>
         </Routes>
       </BrowserRouter>
     )

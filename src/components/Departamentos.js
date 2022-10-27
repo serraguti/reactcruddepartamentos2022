@@ -62,6 +62,10 @@ export default class Departamentos extends Component {
     Eliminar
 </NavLink>
 
+<NavLink to={"/update/" + departamento.numero} className="btn btn-info">
+    Modificar
+</NavLink>
+
 
                                         </td>
                                     </tr>)
